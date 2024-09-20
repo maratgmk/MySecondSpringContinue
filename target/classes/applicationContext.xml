@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+       <bean id="first" class="pojo.customer.Customer" scope="singleton">
+           <property name="id" value="1" />
+           <property name="name" value="Bob"/>
+           <property name="phone" value="+19138445656"/>
+           <property name="email" value="null"/>
+           <property name="dateOfLastNotification" ref="dateNotification1"/>
+       </bean>
+
+       <bean id="second" class="pojo.customer.Customer" scope="singleton">
+           <property name="id" value="2"/>
+           <property name="name" value="Sarah"/>
+           <property name="phone" value="+19158455617"/>
+           <property name="email" value="sarah-sweet@candy.com"/>
+           <property name="dateOfLastNotification" ref="dateNotification2"/>
+       </bean>
+    <bean id="dateNotification1" class="java.time.LocalDate" factory-method="now">
+    </bean>
+
+    <bean id="dateNotification2" class="java.time.LocalDate" factory-method="of">
+        <constructor-arg  value="2024"/>
+        <constructor-arg  value="6"/>
+        <constructor-arg  value="1"/>
+    </bean>
+
+    <bean id="notificationService" class="pojo.notification.NotificationService" >
+        <constructor-arg name="emailNotificationService" ref="emailNotificationService"/>
+        <constructor-arg name="smsNotificationService" ref="smsNotificationService"/>
+    </bean>
+    <bean id="emailNotificationService" class="pojo.notification.EmailNotificationServiceImpl"/>
+
+    <bean id="smsNotificationService" class="pojo.notification.SmsNotificationServiceImpl"/>
+
+</beans>
